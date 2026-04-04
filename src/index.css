@@ -31,6 +31,36 @@ header{
 }
 
 
+main{
+  margin: '20px';
+  max-width: '400px';
+  width: '90%';
+  padding: 20px;
+}
+
+main ul li{
+  display: 'flex';
+  justify-content: 'space-between';
+  align-items: 'center';
+  padding: '10px';
+  border-bottom: '1px solid #ccc';
+}
+
+.item{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.item svg:focus,
+.item svg:hover{
+  color:rgb(55, 0, 255);
+  outline: none;
+}
+
+
 footer{
   background-color: rgb(0, 0, 0);
   color: #fff;

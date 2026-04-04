@@ -1,54 +1,68 @@
 import { useState } from 'react';
+import { FaTrashAlt } from 'react-icons/fa';
 
 const Content = () => {
-    const [name, setName] = useState('Rama');
-    const [count, setCount] =useState(0);
+    const [items, setItems] = useState([
+        {
+            id: 1,
+            checked: false,
+            item: "item one"
+        },
 
-    const handleNameChange = () => {
-        const name = ['akshay', 'atul', 'arvind', 'panda', 'vighnesh'];
-        const randomName = Math.floor(Math.random() * name.length);
-        setName(name[randomName]);
+        {
+            id: 2,
+            checked: false,
+            item: "item two"
+        },
+
+        {
+            id: 3,
+            checked: false,
+            item: "item three"
+        }
+    ]);
+
+    const handleCheck = (id) => {
+        const listItems = items.map((item) => item.id === id ? { ...item,checked: !item.checked } : item);
+        setItems(listItems);
+        localStorage.setItem('shoppinglist', JSON.stringify(listItems));
     }
 
-    const handlestyle = {
-        display: 'flex',
-        flexDirection: 'column',
-        width: '100%', 
-        textAlign: 'center', 
-        fontSize: '24px', 
-        marginTop: '20px', 
-        height: '450px', 
-        backgroundColor: '#f0f0f0',
-        color: '#333',
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center'
+    const handleDelete = (id) => {
+        const listItems = items.filter((item) => item.id !== id);
+        setItems(listItems);
+        localStorage.setItem('shoppinglist', JSON.stringify(listItems));
     }
 
-    const handleClick = () => {
-        setCount(count + 1);
-        console.log(count);
-    }
-    const handleClick2 = (name) => {
-        alert(`Button Clicked, Hello ${name}`);
-    }
-    const handleClick3 = (e) => {
-        console.log(e.target.innerText);
-    }
     
-
 
 
     return (
         <main>
-            <p onDoubleClick = {handleClick} style={handlestyle}>
-                Hello {name} !
-                <button onClick={(handleNameChange)}>Change Name</button>
-                <button onClick={(handleClick)}>Click Me</button>
-                <button onClick={() => handleClick2(handleNameChange())}>Click Me</button>
-                <button onClick={(e) => handleClick3(e)}>Click Me</button>
-            </p>
-            
+            {items.length ? ( 
+            <ul>
+                {items.map((item) => (
+                    <li className='item' key={item.key}>
+                        <input
+                            type='checkbox'
+                            checked = {item.checked}
+                            onChange={() => handleCheck(item.id)}
+                        />
+                        <label
+                            style={(item.checked) ? { textDecoration: 'line-through' } : null}
+                            onDoubleClick={() => handleCheck(item.id)}
+                        >{item.item}</label>
+                        <FaTrashAlt 
+                            role='button' 
+                            tabIndex='0' 
+                            onClick={() => handleDelete(item.id)}
+                        />
+                    </li>
+                ))}
+            </ul>  
+            ) : (
+                <p style={{ marginTop: '2rem' }}>Your list is empty.</p>
+            )}  
         </main>
     )
 }
