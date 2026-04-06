@@ -1,10 +1,10 @@
-const Footer = () => {
+const Footer = ({ length }) => {
 
     const date = new Date();
 
     return (
         <footer>
-            <p>Copyright &copy; {date.getFullYear()} My App. All rights reserved.</p>
+            <p>{length} left in list {length === 1 ? 'item' : 'items'}</p>
         </footer>
     )
 }
